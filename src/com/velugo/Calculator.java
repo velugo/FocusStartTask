@@ -1,15 +1,32 @@
 package com.velugo;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
 class Calculator {
-    public String evaluate(String statement){
+    String evaluate(String statement){
         if (statement == null || statement.isEmpty() || statement.contains(",") || statement.contains(" ")) {
             return "Синтаксическая ошибка выражения!";
         } else {
-            String sIn = "0" + statement;
+            String sIn = "";
+            ArrayList<Character> list = new ArrayList<Character>();
+            for (int i = 0; i < statement.length(); i++) {
+                char c = statement.charAt(i);
+                if (i == 0) {
+                    list.add('0');
+                    list.add(c);
+                } else if (c == '('){
+                    list.add(c);
+                    list.add('0');
+                } else {
+                    list.add(c);
+                }
+            }
+            for (char c : list) {
+                sIn += c;
+            }
             sIn = opn(sIn);
             String out;
             try {
@@ -42,6 +59,7 @@ class Calculator {
                 sbStack.append(cIn);
             } else if ('(' == cIn) {
                 sbStack.append(cIn);
+
             } else if (')' == cIn) {
                 cTmp = sbStack.substring(sbStack.length()-1).charAt(0);
                 while ('(' != cTmp) {
@@ -86,7 +104,7 @@ class Calculator {
         return 1;
     }
 
-    private static double calculate(String sIn) throws Exception {
+    private static double calculate(String sIn) {
         double dA = 0, dB = 0;
         String sTmp;
         Deque<Double> stack = new ArrayDeque<Double>();
