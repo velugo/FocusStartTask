@@ -31,7 +31,7 @@ class Calculator {
             String out;
             try {
                 out = String.valueOf(calculate(sIn));
-                return (out.contains(".0")) ? out.substring(0, out.length() - 2) : out;
+                return (out.endsWith(".0")) ? out.substring(0, out.length() - 2) : out;
             } catch (Exception e) {
                 return "Логическая ошибка выражения!";
             }
